@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/svg+xml" href="https://app.spock.chat/spock-favicon.png" />
+	<title>Elite LMS | Strategic Proposal for Stage Zero</title>
+	<meta property="og:image" content="https://d2yln88910ulu4.cloudfront.net/previews/f2aead37-1506-4320-b6da-c8de0dc90253.webp" />
+	<meta property="og:title" content="Elite LMS | Strategic Proposal for Stage Zero" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://d2yln88910ulu4.cloudfront.net/previews/f2aead37-1506-4320-b6da-c8de0dc90253.webp" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>tailwind.config={darkMode:'class'}</script>
+	<script type="importmap">{
+  "imports": {
+    "react": "https://esm.sh/react@19.2.4",
+    "react-dom/client": "https://esm.sh/react-dom@19.2.4/client",
+    "framer-motion": "https://esm.sh/framer-motion@12.34.3?deps=react@19.2.4",
+    "react-icons/fa": "https://esm.sh/react-icons@5.5.0/fa?deps=react@19.2.4"
+  }
+}</script>
+	<style>@media (min-width: 800px) { ::-webkit-scrollbar-track { background-color: #eaeaea; } ::-webkit-scrollbar-thumb { background: #cbcbcb; box-shadow: #4d4d4d 0px 0px 1px 0px inset; border: 2px solid rgba(0, 0, 0, 0); background-clip: padding-box; } ::-webkit-scrollbar { width: 12px; height: 12px; } } body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; } spock-text { display: inline; } svg { overflow: visible; } .made-with-spock { position: fixed; bottom: 20px; right: 20px; background: #1a2035; padding: 8px 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); font-size: 10px; font-weight: 600; color: #e2e8f0; z-index: 1000; text-decoration: none; transition: transform 0.2s; display: flex; flex-direction: column; align-items: center; gap: 2px; } .made-with-spock:hover { transform: scale(1.05); }.module-error-box { position: fixed; inset: 0; background: #1e1e1e; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace; padding: 20px; box-sizing: border-box; } .module-error-inner { background: #1e1e1e; border: 2px solid #ff5555; border-radius: 12px; max-width: 800px; width: 100%; } .module-error-header { background: #ff5555; color: white; padding: 16px 20px; font-weight: 600; font-size: 16px; border-radius: 12px; } .module-error-content { padding: 20px; color: #f8f8f2; } .module-error-message { background: #2d2d2d; padding: 16px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; font-size: 14px; line-height: 1.6; color: #ff6b6b; }</style>
+	<script>
+function showError(msg, details) {
+	console.error('[CLIENT ERROR]', msg, details);
+	document.getElementById("root").innerHTML = '<div class="module-error-box"><div class="module-error-inner"><div class="module-error-header">⚠️ Runtime Error</div><div class="module-error-content"><div class="module-error-message">' + msg + (details ? '<br><pre style="font-size:10px;margin-top:10px;text-align:left;">' + details + '</pre>' : '') + '</div></div></div></div>';
+}
+window.onerror = function(msg, url, line, col, error) { 
+	const details = 'Line: ' + line + ', Col: ' + col + (error?.stack ? '\n' + error.stack : '');
+	showError(error?.message || msg, details); 
+	return true; 
+};
+window.addEventListener('unhandledrejection', function(e) { showError(e.reason?.message || e.reason || 'Unknown error', e.reason?.stack); });</script>
+</head>
+<body>
+	<div id="root"></div>
+	<script type="module">import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { createRoot } from 'react-dom/client';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { FaArrowRight, FaChevronDown } from 'react-icons/fa';
+import { FaTimes, FaBars, FaChevronRight } from 'react-icons/fa';
+import { FaLightbulb, FaQuoteLeft, FaUserTie, FaCheckCircle } from 'react-icons/fa';
+import { FaClock, FaChartLine, FaDatabase, FaUserCog, FaCloudUploadAlt, FaCertificate, FaExpandArrowsAlt } from 'react-icons/fa';
+import { FaInfoCircle, FaCheck, FaCalculator, FaRegCheckCircle } from 'react-icons/fa';
+import { FaCalendarAlt, FaPlane, FaWallet, FaSearch, FaTools, FaLink, FaCheckDouble, FaRocket } from 'react-icons/fa';
+import { FaPlaneDeparture, FaEdit, FaFileUpload, FaCode } from 'react-icons/fa';
+import { FaShieldAlt, FaPercent, FaCalendarCheck, FaGavel, FaFileContract } from 'react-icons/fa';
+import { FaFileSignature, FaSignature, FaUser, FaCalendarDay, FaBuilding, FaHashtag, FaPaperPlane } from 'react-icons/fa';
+const IntroductionWelcome = () => {
+    const scrollToNext = useCallback(() => {
+        const nextSection = document.getElementById('navigation-hub');
+        if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, []);
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.3
+            }
+        }
+    };
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: "easeOut" }
+        }
+    };
+    return (React.createElement("div", { key: "comp-0", "data-component-index": "0", "data-section-id": "hero-cover" },
+        React.createElement("section", { id: "hero-cover", className: "relative min-h-screen flex flex-col justify-center font-sans overflow-hidden bg-[#1A2B3C] text-white", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "absolute inset-0 z-0", "data-spock-element-id": "1" },
+                React.createElement("img", { src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000", alt: "Modern Corporate Office Background", className: "w-full h-full object-cover opacity-30", "data-spock-element-id": "2", "data-spock-image-id": "0" }),
+                React.createElement("div", { className: "absolute inset-0 bg-gradient-to-tr from-[#1A2B3C] via-[#1A2B3C]/80 to-transparent", "data-spock-element-id": "3" })),
+            React.createElement("div", { className: "absolute top-0 left-0 w-full p-6 md:p-12 z-20 flex justify-between items-center", "data-spock-element-id": "4" },
+                React.createElement(motion.div, { initial: { opacity: 0, x: -20 }, animate: { opacity: 1, x: 0 }, className: "flex items-center", "data-spock-element-id": "5" },
+                    React.createElement("img", { src: "https://d2yln88910ulu4.cloudfront.net/chatFiles/29eda64c-34d9-4e06-962d-013ce3d2010e.png", alt: "Elite LMS Logo", className: "h-12 md:h-16 w-auto object-contain rounded-lg shadow-lg", "data-spock-element-id": "6", "data-spock-image-id": "1" })),
+                React.createElement(motion.div, { initial: { opacity: 0, x: 20 }, animate: { opacity: 1, x: 0 }, className: "text-right hidden sm:block", "data-spock-element-id": "7" },
+                    React.createElement("p", { className: "text-sm text-gray-400 font-medium uppercase tracking-widest", "data-spock-element-id": "8" },
+                        React.createElement("spock-text", { "data-spock-id": "0" }, "Proposal Date")),
+                    React.createElement("p", { className: "text-lg font-semibold text-[#00A896]", "data-spock-element-id": "9" },
+                        React.createElement("spock-text", { "data-spock-id": "1" }, "27 February 2026")))),
+            React.createElement("div", { className: "relative z-10 container mx-auto px-6 md:px-12", "data-spock-element-id": "10" },
+                React.createElement(motion.div, { variants: containerVariants, initial: "hidden", animate: "visible", className: "max-w-4xl", "data-spock-element-id": "11" },
+                    React.createElement(motion.div, { variants: itemVariants, className: "mb-6", "data-spock-element-id": "12" },
+                        React.createElement("span", { className: "inline-block py-1 px-3 rounded bg-[#00A896]/20 border border-[#00A896]/30 text-[#00A896] text-sm font-bold uppercase tracking-wider mb-4", "data-spock-element-id": "13" },
+                            React.createElement("spock-text", { "data-spock-id": "2" }, " Strategic Partnership ")),
+                        React.createElement("h1", { className: "text-5xl md:text-7xl font-bold leading-tight mb-4", "data-spock-element-id": "14" },
+                            React.createElement("spock-text", { "data-spock-id": "3" }, " Proposal for "),
+                            React.createElement("br", { "data-spock-element-id": "15" }),
+                            React.createElement("span", { className: "text-[#00A896]", "data-spock-element-id": "16" },
+                                React.createElement("spock-text", { "data-spock-id": "4" }, "LMS Solution")))),
+                    React.createElement(motion.div, { variants: itemVariants, className: "bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-8 rounded-xl shadow-2xl mb-10 max-w-2xl", "data-spock-element-id": "17" },
+                        React.createElement("p", { className: "text-gray-400 text-sm uppercase tracking-widest mb-4", "data-spock-element-id": "18" },
+                            React.createElement("spock-text", { "data-spock-id": "5" }, "Prepared for Stage Zero")),
+                        React.createElement("h2", { className: "text-2xl md:text-3xl font-medium text-white mb-2", "data-spock-element-id": "19" },
+                            React.createElement("spock-text", { "data-spock-id": "6" }, " Dear Elise, Mimi, JP, and Nick, ")),
+                        React.createElement("p", { className: "text-gray-300 leading-relaxed text-lg", "data-spock-element-id": "20" },
+                            React.createElement("spock-text", { "data-spock-id": "7" }, " Thank you for the opportunity to present a total solution tailored to the unique training requirements of Stage Zero. "))),
+                    React.createElement(motion.div, { variants: itemVariants, className: "flex flex-col md:flex-row items-start md:items-center gap-8", "data-spock-element-id": "21" },
+                        React.createElement("button", { onClick: scrollToNext, className: "group flex items-center gap-3 bg-[#00A896] hover:bg-[#008f7e] text-white px-8 py-4 rounded-full font-bold transition-all duration-300 shadow-xl hover:shadow-[#00A896]/20", "data-spock-element-id": "22" },
+                            React.createElement("spock-text", { "data-spock-id": "8" }, " START REVIEW "),
+                            React.createElement(FaArrowRight, { className: "group-hover:translate-x-1 transition-transform", "data-spock-element-id": "23" })),
+                        React.createElement("div", { className: "flex flex-col border-l border-white/20 pl-6", "data-spock-element-id": "24" },
+                            React.createElement("span", { className: "text-xs text-gray-400 uppercase tracking-widest", "data-spock-element-id": "25" },
+                                React.createElement("spock-text", { "data-spock-id": "9" }, "Presented By")),
+                            React.createElement("span", { className: "text-lg font-semibold", "data-spock-element-id": "26" },
+                                React.createElement("spock-text", { "data-spock-id": "10" }, "Schalk van der Walt")),
+                            React.createElement("span", { className: "text-sm text-[#00A896]", "data-spock-element-id": "27" },
+                                React.createElement("spock-text", { "data-spock-id": "11" }, "Director, Elite Group")))))),
+            React.createElement(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { delay: 1.5, duration: 1 }, className: "absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 cursor-pointer", onClick: scrollToNext, "data-spock-element-id": "28" },
+                React.createElement("span", { className: "text-[10px] uppercase tracking-[0.3em] text-gray-500", "data-spock-element-id": "29" },
+                    React.createElement("spock-text", { "data-spock-id": "12" }, "Scroll")),
+                React.createElement(motion.div, { animate: { y: [0, 8, 0] }, transition: { repeat: Infinity, duration: 2 }, "data-spock-element-id": "30" },
+                    React.createElement(FaChevronDown, { className: "text-[#00A896] text-xl", "data-spock-element-id": "31" }))),
+            React.createElement("div", { className: "absolute bottom-0 right-0 w-1/3 h-1/3 z-0 pointer-events-none", "data-spock-element-id": "32" },
+                React.createElement("svg", { viewBox: "0 0 200 200", className: "w-full h-full opacity-10", "data-spock-element-id": "33" },
+                    React.createElement("circle", { cx: "150", cy: "150", r: "100", fill: "#00A896", "data-spock-element-id": "34" }))))));
+};
+const InteractiveNavigation = () => {
+    const [activeSection, setActiveSection] = useState('navigation-hub');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const navItems = [
+        { name: 'Overview', href: '#executive-summary' },
+        { name: 'Features', href: '#features-benefits' },
+        { name: 'Pricing', href: '#subscription-pricing' },
+        { name: 'Implementation', href: '#implementation-roadmap' },
+        { name: 'Acceptance', href: '#proposal-acceptance' }
+    ];
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+            const sectionIds = navItems.map(item => item.href.replace('#', ''));
+            let current = 'navigation-hub';
+            for (const id of sectionIds) {
+                const element = document.getElementById(id);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    // Buffer of 120px for the sticky header height
+                    if (rect.top <= 120) {
+                        current = id;
+                    }
+                }
+            }
+            setActiveSection(current);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    const handleNavClick = (e, href) => {
+        e.preventDefault();
+        const targetId = href.replace('#', '');
+        if (targetId === 'navigation-hub') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        else {
+            const element = document.getElementById(targetId);
+            if (element) {
+                const offset = 80;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = element.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        setIsMobileMenuOpen(false);
+    };
+    return (React.createElement("div", { key: "comp-1", "data-component-index": "1", "data-section-id": "navigation-hub" },
+        React.createElement("section", { id: "navigation-hub", className: "font-sans sticky top-0 z-[100] w-full transition-all duration-300", "data-spock-element-id": "0" },
+            React.createElement("div", { className: `absolute inset-0 transition-all duration-300 ${isScrolled ? 'bg-white/95 shadow-md backdrop-blur-md' : 'bg-white border-b border-gray-100'}`, "data-spock-element-id": "1" }),
+            React.createElement("div", { className: "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", "data-spock-element-id": "2" },
+                React.createElement("div", { className: "flex justify-between items-center h-20", "data-spock-element-id": "3" },
+                    React.createElement("div", { className: "flex-shrink-0 flex items-center", "data-spock-element-id": "4" },
+                        React.createElement("a", { href: "#navigation-hub", onClick: (e) => handleNavClick(e, '#navigation-hub'), className: "block focus:outline-none transition-opacity hover:opacity-90", "data-spock-element-id": "5" },
+                            React.createElement("img", { src: "https://d2yln88910ulu4.cloudfront.net/chatFiles/29eda64c-34d9-4e06-962d-013ce3d2010e.png", alt: "Elite LMS", className: "h-10 md:h-12 w-auto object-contain", "data-spock-element-id": "6", "data-spock-image-id": "0" }))),
+                    React.createElement("nav", { className: "hidden md:flex space-x-1 lg:space-x-2", "data-spock-element-id": "7" }, navItems.map((item) => (React.createElement("a", { key: item.name, href: item.href, onClick: (e) => handleNavClick(e, item.href), className: `px-3 lg:px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 border-b-2 ${activeSection === item.href.replace('#', '') ? 'text-[#00A896] border-[#00A896] bg-slate-50' : 'text-slate-600 border-transparent hover:text-[#1A2B3C] hover:bg-slate-50'}` }, item.name)))),
+                    React.createElement("div", { className: "hidden md:block", "data-spock-element-id": "8" },
+                        React.createElement("a", { href: "#proposal-acceptance", onClick: (e) => handleNavClick(e, '#proposal-acceptance'), className: "inline-flex items-center px-6 py-2.5 border border-transparent text-sm font-bold rounded-lg text-white bg-[#1A2B3C] hover:bg-[#00A896] transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm", "data-spock-element-id": "9" },
+                            React.createElement("spock-text", { "data-spock-id": "0" }, " Get Started "))),
+                    React.createElement("div", { className: "md:hidden flex items-center", "data-spock-element-id": "10" },
+                        React.createElement("button", { onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen), className: "p-2 rounded-md text-slate-600 hover:text-[#1A2B3C] hover:bg-slate-100 focus:outline-none transition-colors", "aria-label": "Toggle menu", "data-spock-element-id": "11" }, isMobileMenuOpen ? React.createElement(FaTimes, { className: "h-6 w-6" }) : React.createElement(FaBars, { className: "h-6 w-6" }))))),
+            React.createElement(AnimatePresence, { "data-spock-element-id": "12" }, isMobileMenuOpen && (React.createElement(motion.div, { initial: { opacity: 0, height: 0 }, animate: { opacity: 1, height: 'auto' }, exit: { opacity: 0, height: 0 }, transition: { duration: 0.3, ease: 'easeInOut' }, className: "md:hidden bg-white border-t border-gray-100 overflow-hidden shadow-2xl" },
+                React.createElement("div", { className: "px-4 pt-4 pb-8 space-y-2" },
+                    navItems.map((item) => (React.createElement("a", { key: item.name, href: item.href, onClick: (e) => handleNavClick(e, item.href), className: `flex items-center justify-between px-4 py-4 rounded-xl text-base font-bold transition-colors ${activeSection === item.href.replace('#', '') ? 'bg-[#00A896]/5 text-[#00A896]' : 'text-slate-700 hover:bg-slate-50'}` },
+                        item.name,
+                        React.createElement(FaChevronRight, { className: `h-3 w-3 ${activeSection === item.href.replace('#', '') ? 'text-[#00A896]' : 'opacity-30'}` })))),
+                    React.createElement("div", { className: "pt-6 px-4" },
+                        React.createElement("a", { href: "#proposal-acceptance", onClick: (e) => handleNavClick(e, '#proposal-acceptance'), className: "block w-full text-center px-6 py-4 bg-[#1A2B3C] text-white font-bold rounded-xl shadow-lg hover:bg-[#00A896] transition-colors" }, "Get Started Now")))))),
+            React.createElement("div", { className: "w-full h-[3px] bg-gray-100", "data-spock-element-id": "13" },
+                React.createElement(motion.div, { className: "h-full bg-[#00A896]", initial: { width: '0%' }, animate: {
+                        width: activeSection === 'navigation-hub' ? '0%' :
+                            activeSection === 'executive-summary' ? '20%' :
+                                activeSection === 'features-benefits' ? '40%' :
+                                    activeSection === 'subscription-pricing' ? '60%' :
+                                        activeSection === 'implementation-roadmap' ? '80%' :
+                                            '100%'
+                    }, transition: { type: 'spring', stiffness: 50, damping: 20 }, "data-spock-element-id": "14" })))));
+};
+const TheEliteLmsApproach = () => {
+    const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } } };
+    const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } } };
+    const accentVariants = { hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.8, ease: 'easeInOut' } } };
+    return (React.createElement("div", { key: "comp-2", "data-component-index": "2", "data-section-id": "executive-summary" },
+        React.createElement("section", { id: "executive-summary", className: "relative py-24 bg-white font-sans overflow-hidden", "data-spock-element-id": "0" },
+            " ",
+            React.createElement("div", { className: "absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -z-10 skew-x-6 transform translate-x-20", "aria-hidden": "true", "data-spock-element-id": "1" }),
+            " ",
+            React.createElement(motion.div, { className: "container mx-auto px-6 max-w-7xl", variants: containerVariants, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: '-100px' }, "data-spock-element-id": "2" },
+                " ",
+                React.createElement("div", { className: "flex flex-col lg:flex-row gap-16 items-start", "data-spock-element-id": "3" },
+                    " ",
+                    React.createElement("div", { className: "w-full lg:w-3/5", "data-spock-element-id": "4" },
+                        " ",
+                        React.createElement(motion.div, { variants: itemVariants, className: "mb-8", "data-spock-element-id": "5" },
+                            " ",
+                            React.createElement("span", { className: "inline-block py-1 px-3 mb-4 text-xs font-bold tracking-widest text-[#00A896] uppercase bg-[#00A896]/10 rounded-full", "data-spock-element-id": "6" },
+                                React.createElement("spock-text", { "data-spock-id": "0" }, " Strategic Partnership ")),
+                            " ",
+                            React.createElement("h2", { className: "text-4xl md:text-5xl font-bold text-[#1A2B3C] leading-tight mb-6", "data-spock-element-id": "7" },
+                                React.createElement("spock-text", { "data-spock-id": "1" }, " The Elite LMS "),
+                                React.createElement("br", { "data-spock-element-id": "8" }),
+                                " ",
+                                React.createElement("span", { className: "text-[#00A896]", "data-spock-element-id": "9" },
+                                    React.createElement("spock-text", { "data-spock-id": "2" }, "Approach")),
+                                " "),
+                            " ",
+                            React.createElement(motion.div, { className: "h-1.5 w-24 bg-[#00A896] origin-left rounded-full mb-8", variants: accentVariants, "data-spock-element-id": "10" }),
+                            " "),
+                        " ",
+                        React.createElement(motion.div, { variants: itemVariants, className: "space-y-6 text-lg text-slate-600 leading-relaxed", "data-spock-element-id": "11" },
+                            " ",
+                            React.createElement("p", { "data-spock-element-id": "12" },
+                                React.createElement("spock-text", { "data-spock-id": "3" }, " Dear "),
+                                React.createElement("span", { className: "font-semibold text-[#1A2B3C]", "data-spock-element-id": "13" },
+                                    React.createElement("spock-text", { "data-spock-id": "4" }, "Elise, Mimi, JP, and Nick")),
+                                React.createElement("spock-text", { "data-spock-id": "5" }, ", ")),
+                            " ",
+                            React.createElement("p", { "data-spock-element-id": "14" },
+                                React.createElement("spock-text", { "data-spock-id": "6" }, " Thank you for the opportunity to provide you with this proposal. We recognize that Stage Zero requires more than just software; you require a partner capable of transforming your organizational knowledge into a competitive advantage. ")),
+                            " ",
+                            React.createElement("p", { "data-spock-element-id": "15" },
+                                " ",
+                                React.createElement("span", { className: "text-[#1A2B3C] font-medium", "data-spock-element-id": "16" },
+                                    React.createElement("spock-text", { "data-spock-id": "7" }, "Elite LMS")),
+                                React.createElement("spock-text", { "data-spock-id": "8" }, " provides a total solution designed specifically to address the unique training requirements of your business. Our ecosystem ensures rapid deployment and high user adoption rates, effectively addressing both your immediate tactical needs and your long-term strategic training goals. ")),
+                            " "),
+                        " ",
+                        React.createElement(motion.div, { variants: itemVariants, className: "mt-12 p-8 border-l-4 border-[#00A896] bg-slate-50 rounded-r-xl shadow-sm", "data-spock-element-id": "17" },
+                            " ",
+                            React.createElement("div", { className: "flex items-center gap-4 mb-4", "data-spock-element-id": "18" },
+                                " ",
+                                React.createElement("div", { className: "p-3 bg-white rounded-lg shadow-sm text-[#00A896]", "data-spock-element-id": "19" },
+                                    " ",
+                                    React.createElement(FaLightbulb, { className: "text-xl", "data-spock-element-id": "20" }),
+                                    " "),
+                                " ",
+                                React.createElement("h4", { className: "font-bold text-[#1A2B3C] text-xl", "data-spock-element-id": "21" },
+                                    React.createElement("spock-text", { "data-spock-id": "9" }, "Our Core Commitment")),
+                                " "),
+                            " ",
+                            React.createElement("p", { className: "text-slate-600 italic leading-relaxed", "data-spock-element-id": "22" },
+                                React.createElement("spock-text", { "data-spock-id": "10" }, " \"While the solution offers many standard features and functionality that is simple to deploy, we also understand that every customer and learning environment is different and adapt our project roll out accordingly.\" ")),
+                            " "),
+                        " "),
+                    " ",
+                    React.createElement("div", { className: "w-full lg:w-2/5", "data-spock-element-id": "23" },
+                        " ",
+                        React.createElement(motion.div, { variants: itemVariants, className: "relative p-1 bg-gradient-to-br from-[#1A2B3C] to-[#00A896] rounded-2xl shadow-2xl overflow-hidden", "data-spock-element-id": "24" },
+                            " ",
+                            React.createElement("div", { className: "bg-white p-8 md:p-10 rounded-[calc(1rem-1px)] h-full relative", "data-spock-element-id": "25" },
+                                " ",
+                                React.createElement(FaQuoteLeft, { className: "absolute top-6 right-8 text-slate-100 text-6xl -z-0", "data-spock-element-id": "26" }),
+                                " ",
+                                React.createElement("div", { className: "relative z-10", "data-spock-element-id": "27" },
+                                    " ",
+                                    React.createElement("div", { className: "flex items-center gap-4 mb-8", "data-spock-element-id": "28" },
+                                        " ",
+                                        React.createElement("div", { className: "w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-[#1A2B3C] border-2 border-[#00A896]/20", "data-spock-element-id": "29" },
+                                            " ",
+                                            React.createElement(FaUserTie, { className: "text-3xl", "data-spock-element-id": "30" }),
+                                            " "),
+                                        " ",
+                                        React.createElement("div", { "data-spock-element-id": "31" },
+                                            " ",
+                                            React.createElement("h5", { className: "font-bold text-[#1A2B3C] text-xl", "data-spock-element-id": "32" },
+                                                React.createElement("spock-text", { "data-spock-id": "11" }, "Director's Note")),
+                                            " ",
+                                            React.createElement("p", { className: "text-[#00A896] font-medium text-sm uppercase tracking-wide", "data-spock-element-id": "33" },
+                                                React.createElement("spock-text", { "data-spock-id": "12" }, "Schalk van der Walt")),
+                                            " "),
+                                        " "),
+                                    " ",
+                                    React.createElement("div", { className: "space-y-4 text-slate-600 leading-relaxed text-base", "data-spock-element-id": "34" },
+                                        " ",
+                                        React.createElement("p", { "data-spock-element-id": "35" },
+                                            React.createElement("spock-text", { "data-spock-id": "13" }, " The Elite Group of companies have the combined skills, experience and \"know-how\" to deliver a world-class LMS solution to "),
+                                            React.createElement("span", { className: "text-[#1A2B3C] font-bold", "data-spock-element-id": "36" },
+                                                React.createElement("spock-text", { "data-spock-id": "14" }, "Stage Zero")),
+                                            React.createElement("spock-text", { "data-spock-id": "15" }, ". ")),
+                                        " ",
+                                        React.createElement("p", { "data-spock-element-id": "37" },
+                                            React.createElement("spock-text", { "data-spock-id": "16" }, " Our approach is "),
+                                            React.createElement("span", { className: "bg-[#00A896]/10 text-[#00A896] px-1 font-semibold rounded", "data-spock-element-id": "38" },
+                                                React.createElement("spock-text", { "data-spock-id": "17" }, "agile and customer-centric")),
+                                            React.createElement("spock-text", { "data-spock-id": "18" }, ". We believe in providing a framework that is both robust for administrators and frictionless for learners. ")),
+                                        " ",
+                                        React.createElement("p", { "data-spock-element-id": "39" },
+                                            React.createElement("spock-text", { "data-spock-id": "19" }, " Our goal is to empower your team to scale without the traditional friction of learning and development bottlenecks. ")),
+                                        " "),
+                                    " ",
+                                    React.createElement("div", { className: "mt-10 pt-8 border-t border-slate-100 flex items-center justify-between", "data-spock-element-id": "40" },
+                                        " ",
+                                        React.createElement("div", { className: "flex flex-col", "data-spock-element-id": "41" },
+                                            " ",
+                                            React.createElement("span", { className: "text-[#1A2B3C] font-bold", "data-spock-element-id": "42" },
+                                                React.createElement("spock-text", { "data-spock-id": "20" }, "Elite LMS Team")),
+                                            " ",
+                                            React.createElement("span", { className: "text-slate-400 text-sm italic", "data-spock-element-id": "43" },
+                                                React.createElement("spock-text", { "data-spock-id": "21" }, "Ready for Deployment")),
+                                            " "),
+                                        " ",
+                                        React.createElement("div", { className: "h-10 w-10 bg-[#00A896] rounded-full flex items-center justify-center text-white shadow-lg", "data-spock-element-id": "44" },
+                                            " ",
+                                            React.createElement(FaCheckCircle, { "data-spock-element-id": "45" }),
+                                            " "),
+                                        " "),
+                                    " "),
+                                " "),
+                            " "),
+                        " ",
+                        React.createElement(motion.div, { variants: itemVariants, className: "mt-8 flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-lg text-slate-500 text-sm", "data-spock-element-id": "46" },
+                            " ",
+                            React.createElement("div", { className: "w-2 h-2 rounded-full bg-[#00A896] animate-pulse", "data-spock-element-id": "47" }),
+                            " ",
+                            React.createElement("span", { "data-spock-element-id": "48" },
+                                React.createElement("spock-text", { "data-spock-id": "22" }, "Proposal valid for 30 days from 27 February 2026")),
+                            " "),
+                        " "),
+                    " "),
+                " "),
+            " ")));
+};
+const FeaturesBusinessBenefits = () => {
+    const benefits = [
+        {
+            title: "Cost & Time Efficiency",
+            description: "Significantly reduce Learning and Development overhead while accelerating the speed of knowledge transfer across your teams.",
+            icon: FaClock
+        },
+        {
+            title: "Progress Tracking",
+            description: "Monitor learner engagement and progress in real-time, ensuring accountability and measurable growth metrics.",
+            icon: FaChartLine
+        },
+        {
+            title: "Centralized Reporting",
+            description: "Consolidate all training information into a single source of truth with robust reporting capabilities and analytics.",
+            icon: FaDatabase
+        },
+        {
+            title: "Streamlined Admin",
+            description: "Simplify complex training administration tasks through an intuitive interface designed for maximum efficiency.",
+            icon: FaUserCog
+        },
+        {
+            title: "Content Flexibility",
+            description: "Maintain full control over your intellectual property by easily uploading and managing your own proprietary training content.",
+            icon: FaCloudUploadAlt
+        },
+        {
+            title: "Automated Certification",
+            description: "Instant issuance of course certificates upon completion, boosting learner morale and ensuring compliance verification.",
+            icon: FaCertificate
+        },
+        {
+            title: "Enterprise Scalability",
+            description: "A robust architecture designed to scale seamlessly with your business development and future organizational goals.",
+            icon: FaExpandArrowsAlt
+        }
+    ];
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
+            }
+        }
+    };
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                ease: "easeOut"
+            }
+        }
+    };
+    return (React.createElement("div", { key: "comp-3", "data-component-index": "3", "data-section-id": "features-benefits" },
+        React.createElement("section", { id: "features-benefits", className: "font-sans py-24 px-6 md:px-12 lg:px-24 bg-white text-[#1A2B3C] overflow-hidden", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "max-w-7xl mx-auto", "data-spock-element-id": "1" },
+                React.createElement("div", { className: "mb-16 text-center", "data-spock-element-id": "2" },
+                    React.createElement(motion.div, { initial: { opacity: 0, y: -20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "inline-block px-4 py-1 mb-4 text-sm font-bold tracking-wide uppercase bg-[#00A896]/10 text-[#00A896] rounded-full", "data-spock-element-id": "3" },
+                        React.createElement("spock-text", { "data-spock-id": "0" }, " Core Advantage ")),
+                    React.createElement(motion.h2, { initial: { opacity: 0, y: 10 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "text-4xl md:text-5xl font-bold mb-6 text-[#1A2B3C]", "data-spock-element-id": "4" },
+                        React.createElement("spock-text", { "data-spock-id": "1" }, " Features & Business Benefits ")),
+                    React.createElement(motion.p, { initial: { opacity: 0, y: 10 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed", "data-spock-element-id": "5" },
+                        React.createElement("spock-text", { "data-spock-id": "2" }, " Elite LMS delivers a total solution tailored to the unique training requirements of Stage Zero, balancing rapid deployment with long-term strategic value. "))),
+                React.createElement(motion.div, { variants: containerVariants, initial: "hidden", whileInView: "visible", viewport: { once: true }, className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", "data-spock-element-id": "6" }, benefits.map((benefit, index) => (React.createElement(motion.div, { key: index, variants: itemVariants, whileHover: { y: -5, transition: { duration: 0.2 } }, className: `flex flex-col p-8 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 ${index === 6 ? "md:col-span-2 lg:col-span-1 lg:col-start-2" : ""}` },
+                    React.createElement("div", { className: "w-14 h-14 mb-6 flex items-center justify-center bg-[#1A2B3C] text-[#00A896] rounded-lg shadow-inner" },
+                        React.createElement(benefit.icon, { className: "text-2xl" })),
+                    React.createElement("h3", { className: "text-xl font-bold mb-3 text-[#1A2B3C]" }, benefit.title),
+                    React.createElement("p", { className: "text-gray-600 leading-relaxed" }, benefit.description),
+                    React.createElement("div", { className: "mt-auto pt-6" },
+                        React.createElement("div", { className: "w-12 h-1 bg-[#00A896] rounded-full opacity-30" })))))),
+                React.createElement(motion.div, { initial: { opacity: 0, scale: 0.95 }, whileInView: { opacity: 1, scale: 1 }, viewport: { once: true }, className: "mt-20 p-8 md:p-12 bg-[#1A2B3C] rounded-2xl text-center text-white relative overflow-hidden shadow-2xl", "data-spock-element-id": "7" },
+                    React.createElement("div", { className: "absolute top-0 right-0 -mt-10 -mr-10 opacity-10", "data-spock-element-id": "8" },
+                        React.createElement("svg", { width: "200", height: "200", viewBox: "0 0 200 200", "data-spock-element-id": "9" },
+                            React.createElement("circle", { cx: "100", cy: "100", r: "80", stroke: "white", strokeWidth: "20", fill: "none", "data-spock-element-id": "10" }))),
+                    React.createElement("div", { className: "relative z-10", "data-spock-element-id": "11" },
+                        React.createElement("h4", { className: "text-2xl md:text-3xl font-bold mb-4", "data-spock-element-id": "12" },
+                            React.createElement("spock-text", { "data-spock-id": "3" }, " Ready for Rapid Deployment ")),
+                        React.createElement("p", { className: "text-[#00A896] text-lg font-medium mb-6", "data-spock-element-id": "13" },
+                            React.createElement("spock-text", { "data-spock-id": "4" }, " Our approach is agile, customer-centric, and built for user adoption. ")),
+                        React.createElement("p", { className: "max-w-3xl mx-auto text-gray-300 leading-relaxed", "data-spock-element-id": "14" },
+                            React.createElement("spock-text", { "data-spock-id": "5" }, " While the solution offers standard features that are simple to deploy, we understand that Stage Zero has unique learning environments. Our project rollout is designed to adapt to your specific operational DNA. "))))))));
+};
+const MonthlySubscriptionCosts = () => {
+    const [userCount, setUserCount] = useState(70);
+    const [includeClassroom, setIncludeClassroom] = useState(false);
+    const [includeSLA, setIncludeSLA] = useState(true);
+    const pricingData = {
+        base: 7900,
+        classroom: 5500,
+        sla: 6800
+    };
+    const features = [
+        "Domain registration & hosting (20GB)",
+        "Ad-hoc product updates & enhancements",
+        "Multiple access levels & registrations",
+        "Front-end user profiles",
+        "Multi-tier course Management",
+        "Access expiry & user disabling",
+        "Advanced randomised quizzing",
+        "Certificates, points, badges & leader board",
+        "Drip-feed content functionality",
+        "Flexible prerequisites & lesson timers",
+        "Automated email notifications",
+        "Assignment management",
+        "User activity progress and reporting",
+        "All media types supported"
+    ];
+    const userUnitPrice = userCount >= 350 ? 16 : 20;
+    const userTotal = userCount * userUnitPrice;
+    const addonTotal = (includeClassroom ? pricingData.classroom : 0) + (includeSLA ? pricingData.sla : 0);
+    const grandTotal = pricingData.base + userTotal + addonTotal;
+    const formatCurrency = (val) => {
+        return new Intl.NumberFormat('en-ZA', {
+            style: 'currency',
+            currency: 'ZAR',
+            minimumFractionDigits: 2
+        }).format(val);
+    };
+    return (React.createElement("div", { key: "comp-4", "data-component-index": "4", "data-section-id": "subscription-pricing" },
+        React.createElement("section", { id: "subscription-pricing", className: "py-24 bg-white font-sans overflow-hidden", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "max-w-7xl mx-auto px-6", "data-spock-element-id": "1" },
+                React.createElement("div", { className: "mb-16 text-center", "data-spock-element-id": "2" },
+                    React.createElement(motion.span, { initial: { opacity: 0, y: 10 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, className: "text-[#00A896] font-bold tracking-widest uppercase text-sm block mb-4", "data-spock-element-id": "3" },
+                        React.createElement("spock-text", { "data-spock-id": "0" }, " Investment Overview ")),
+                    React.createElement(motion.h2, { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { delay: 0.1 }, className: "text-4xl md:text-5xl font-bold text-[#1A2B3C] mt-2 mb-6", "data-spock-element-id": "4" },
+                        React.createElement("spock-text", { "data-spock-id": "1" }, " Monthly Subscription Costs ")),
+                    React.createElement(motion.p, { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport: { once: true }, transition: { delay: 0.2 }, className: "text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed", "data-spock-element-id": "5" },
+                        React.createElement("spock-text", { "data-spock-id": "2" }, " Our comprehensive LMS platform provides a "),
+                        React.createElement("span", { className: "font-bold text-[#1A2B3C]", "data-spock-element-id": "6" },
+                            React.createElement("spock-text", { "data-spock-id": "3" }, "unified foundation")),
+                        React.createElement("spock-text", { "data-spock-id": "4" }, " with all core and advanced features included as standard. Scale your implementation with additional integrations tailored to your organizational needs. "))),
+                React.createElement("div", { className: "grid lg:grid-cols-12 gap-12 items-start", "data-spock-element-id": "7" },
+                    React.createElement(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, className: "lg:col-span-7 bg-white rounded-[8px] border border-slate-100 shadow-sm overflow-hidden", "data-spock-element-id": "8" },
+                        React.createElement("div", { className: "p-8 border-b border-slate-100 bg-slate-50/50", "data-spock-element-id": "9" },
+                            React.createElement("h3", { className: "text-xl font-bold text-[#1A2B3C] flex items-center gap-3", "data-spock-element-id": "10" },
+                                React.createElement(FaInfoCircle, { className: "text-[#00A896]", "data-spock-element-id": "11" }),
+                                React.createElement("spock-text", { "data-spock-id": "5" }, " Platform Features Included ")),
+                            React.createElement("p", { className: "text-xs text-slate-500 mt-1 uppercase font-semibold tracking-wider italic", "data-spock-element-id": "12" },
+                                React.createElement("spock-text", { "data-spock-id": "6" }, "Complete suite of management and engagement tools"))),
+                        React.createElement("div", { className: "p-2", "data-spock-element-id": "13" },
+                            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-100", "data-spock-element-id": "14" }, features.map((feature, idx) => (React.createElement("div", { key: idx, className: "bg-white p-4 flex items-center gap-4 hover:bg-slate-50 transition-colors" },
+                                React.createElement("div", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-[#00A896]/10 flex items-center justify-center" },
+                                    React.createElement(FaCheck, { className: "text-[#00A896] text-xs" })),
+                                React.createElement("span", { className: "text-slate-700 font-medium text-sm" }, feature))))))),
+                    React.createElement("div", { className: "lg:col-span-5 sticky top-8", "data-spock-element-id": "15" },
+                        React.createElement("div", { className: "space-y-6", "data-spock-element-id": "16" },
+                            React.createElement(motion.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, className: "bg-[#1A2B3C] rounded-[8px] p-8 text-white shadow-xl", "data-spock-element-id": "17" },
+                                React.createElement("div", { className: "flex items-center gap-3 mb-10", "data-spock-element-id": "18" },
+                                    React.createElement("div", { className: "p-3 bg-[#00A896] rounded-[6px]", "data-spock-element-id": "19" },
+                                        React.createElement(FaCalculator, { className: "text-white text-xl", "data-spock-element-id": "20" })),
+                                    React.createElement("h3", { className: "text-xl font-bold uppercase tracking-wider", "data-spock-element-id": "21" },
+                                        React.createElement("spock-text", { "data-spock-id": "7" }, "Quote Calculator"))),
+                                React.createElement("div", { className: "space-y-10", "data-spock-element-id": "22" },
+                                    React.createElement("div", { "data-spock-element-id": "23" },
+                                        React.createElement("div", { className: "flex justify-between items-end mb-4", "data-spock-element-id": "24" },
+                                            React.createElement("label", { className: "text-slate-400 text-xs font-bold uppercase tracking-widest", "data-spock-element-id": "25" },
+                                                React.createElement("spock-text", { "data-spock-id": "8" }, "User Registrations")),
+                                            React.createElement("span", { className: "text-3xl font-bold text-[#00A896]", "data-spock-element-id": "26" }, userCount)),
+                                        React.createElement("input", { type: "range", min: "10", max: "1000", step: "10", value: userCount, onChange: (e) => setUserCount(parseInt(e.target.value)), className: "w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#00A896]", "data-spock-element-id": "27" }),
+                                        React.createElement("div", { className: "flex justify-between mt-3 text-[10px] text-slate-500 font-bold uppercase tracking-widest", "data-spock-element-id": "28" },
+                                            React.createElement("span", { "data-spock-element-id": "29" },
+                                                React.createElement("spock-text", { "data-spock-id": "9" }, "10 Users")),
+                                            React.createElement("span", { "data-spock-element-id": "30" },
+                                                React.createElement("spock-text", { "data-spock-id": "10" }, "1000 Users"))),
+                                        React.createElement("p", { className: "mt-4 text-[11px] text-[#00A896] font-medium bg-white/5 p-3 rounded-[4px] border border-white/5", "data-spock-element-id": "31" },
+                                            React.createElement("spock-text", { "data-spock-id": "11" }, " Pricing tier: "),
+                                            userCount >= 350 ? 'R16.00/user (Volume Discount)' : 'R20.00/user (Standard)')),
+                                    React.createElement("div", { className: "space-y-6 pt-8 border-t border-white/10", "data-spock-element-id": "32" },
+                                        React.createElement("p", { className: "text-[10px] text-slate-400 font-bold uppercase tracking-widest", "data-spock-element-id": "33" },
+                                            React.createElement("spock-text", { "data-spock-id": "12" }, "Add-On")),
+                                        React.createElement("div", { className: "flex items-center justify-between", "data-spock-element-id": "34" },
+                                            React.createElement("span", { className: "text-sm text-slate-300", "data-spock-element-id": "35" },
+                                                React.createElement("spock-text", { "data-spock-id": "13" }, "Classroom Management")),
+                                            React.createElement("button", { onClick: () => setIncludeClassroom(!includeClassroom), className: `w-12 h-6 rounded-full transition-all relative ${includeClassroom ? 'bg-[#00A896]' : 'bg-slate-700'}`, "data-spock-element-id": "36" },
+                                                React.createElement("div", { className: `absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${includeClassroom ? 'left-7' : 'left-1'}`, "data-spock-element-id": "37" }))),
+                                        React.createElement("div", { className: "flex items-center justify-between", "data-spock-element-id": "38" },
+                                            React.createElement("span", { className: "text-sm text-slate-300", "data-spock-element-id": "39" },
+                                                React.createElement("spock-text", { "data-spock-id": "14" }, "SLA & Support (8hrs/mo)")),
+                                            React.createElement("button", { onClick: () => setIncludeSLA(!includeSLA), className: `w-12 h-6 rounded-full transition-all relative ${includeSLA ? 'bg-[#00A896]' : 'bg-slate-700'}`, "data-spock-element-id": "40" },
+                                                React.createElement("div", { className: `absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${includeSLA ? 'left-7' : 'left-1'}`, "data-spock-element-id": "41" }))))),
+                                React.createElement("div", { className: "mt-12 pt-8 border-t border-white/20", "data-spock-element-id": "42" },
+                                    React.createElement("div", { className: "space-y-4", "data-spock-element-id": "43" },
+                                        React.createElement("div", { className: "flex justify-between text-slate-400 text-xs font-medium", "data-spock-element-id": "44" },
+                                            React.createElement("span", { "data-spock-element-id": "45" },
+                                                React.createElement("spock-text", { "data-spock-id": "15" }, "Base Platform Fee")),
+                                            React.createElement("span", { "data-spock-element-id": "46" }, formatCurrency(pricingData.base))),
+                                        React.createElement("div", { className: "flex justify-between text-slate-400 text-xs font-medium", "data-spock-element-id": "47" },
+                                            React.createElement("span", { "data-spock-element-id": "48" },
+                                                React.createElement("spock-text", { "data-spock-id": "16" }, "User Fees ("),
+                                                userCount,
+                                                React.createElement("spock-text", { "data-spock-id": "17" }, " users)")),
+                                            React.createElement("span", { "data-spock-element-id": "49" }, formatCurrency(userTotal))),
+                                        addonTotal > 0 && (React.createElement("div", { className: "flex justify-between text-slate-400 text-xs font-medium" },
+                                            React.createElement("span", null, "Additional Integrations"),
+                                            React.createElement("span", null, formatCurrency(addonTotal))))),
+                                    React.createElement("div", { className: "mt-8 flex justify-between items-center bg-white/5 p-6 rounded-[8px] border border-white/10", "data-spock-element-id": "50" },
+                                        React.createElement("div", { className: "flex flex-col", "data-spock-element-id": "51" },
+                                            React.createElement("span", { className: "text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1", "data-spock-element-id": "52" },
+                                                React.createElement("spock-text", { "data-spock-id": "18" }, "Monthly Total")),
+                                            React.createElement("span", { className: "text-3xl font-bold text-white", "data-spock-element-id": "53" }, formatCurrency(grandTotal))),
+                                        React.createElement("div", { className: "text-right", "data-spock-element-id": "54" },
+                                            React.createElement("span", { className: "px-2 py-1 bg-[#00A896]/20 text-[#00A896] text-[10px] font-bold rounded", "data-spock-element-id": "55" },
+                                                React.createElement("spock-text", { "data-spock-id": "19" }, "EXCL. VAT")))))),
+                            React.createElement(motion.div, { initial: { opacity: 0, scale: 0.98 }, whileInView: { opacity: 1, scale: 1 }, viewport: { once: true }, className: "bg-slate-50 border border-slate-100 rounded-[8px] p-6 shadow-sm", "data-spock-element-id": "56" },
+                                React.createElement("div", { className: "flex gap-4", "data-spock-element-id": "57" },
+                                    React.createElement(FaRegCheckCircle, { className: "text-[#00A896] text-xl shrink-0 mt-0.5", "data-spock-element-id": "58" }),
+                                    React.createElement("div", { "data-spock-element-id": "59" },
+                                        React.createElement("h4", { className: "font-bold text-[#1A2B3C] text-sm uppercase tracking-wider", "data-spock-element-id": "60" },
+                                            React.createElement("spock-text", { "data-spock-id": "20" }, "Annual Payment Incentive")),
+                                        React.createElement("p", { className: "text-xs text-slate-600 mt-2 leading-relaxed", "data-spock-element-id": "61" },
+                                            React.createElement("spock-text", { "data-spock-id": "21" }, "A "),
+                                            React.createElement("span", { className: "font-bold text-[#00A896]", "data-spock-element-id": "62" },
+                                                React.createElement("spock-text", { "data-spock-id": "22" }, "5% discount")),
+                                            React.createElement("spock-text", { "data-spock-id": "23" }, " is applied automatically on all upfront annual subscription payments."))))))))))));
+};
+const ImplementationRoadmapCosts = () => {
+    const phases = [
+        {
+            id: 1,
+            title: "Discovery & Planning",
+            timeline: "3 Days",
+            cost: 4800,
+            icon: FaSearch,
+            tasks: ["Kick Off meeting", "Needs Analysis and Documentation"]
+        },
+        {
+            id: 2,
+            title: "Build & Configuration",
+            timeline: "7 Days",
+            cost: 10600,
+            icon: FaTools,
+            tasks: ["Technical Installation", "System Configuration", "Groups, departments, branches", "Styling, Branding & Reward Program", "Virtual meeting interface (e.g., Zoom)"]
+        },
+        {
+            id: 3,
+            title: "Payroll Integration",
+            timeline: "5 Days",
+            cost: 12500,
+            icon: FaLink,
+            tasks: ["API Connectivity", "Data Mapping & Validation", "Automated Sync Setup"]
+        },
+        {
+            id: 4,
+            title: "Testing",
+            timeline: "3 Days",
+            cost: 6400,
+            icon: FaCheckDouble,
+            tasks: ["User Acceptance Testing (UAT)", "Project Meetings & Refinements"]
+        },
+        {
+            id: 5,
+            title: "Deployment & Go-Live",
+            timeline: "2 Days",
+            cost: 1200,
+            icon: FaRocket,
+            tasks: ["System Launch", "Go-live assistance"]
+        }
+    ];
+    const containerRef = useRef(null);
+    const isInView = useInView(containerRef, { once: true, amount: 0.1 });
+    const formatCurrency = (val) => {
+        return new Intl.NumberFormat('en-ZA', {
+            style: 'currency', currency: 'ZAR', minimumFractionDigits: 2
+        }).format(val).replace('ZAR', 'R');
+    };
+    const totalCost = phases.reduce((acc, phase) => acc + phase.cost, 0);
+    const totalDuration = "4 Weeks";
+    return (React.createElement("div", { key: "comp-5", "data-component-index": "5", "data-section-id": "implementation-roadmap" },
+        React.createElement("section", { id: "implementation-roadmap", className: "py-24 px-6 bg-[#FFFFFF] font-sans overflow-hidden", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "max-w-6xl mx-auto", "data-spock-element-id": "1" },
+                React.createElement(motion.div, { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 }, className: "mb-20 text-center", "data-spock-element-id": "2" },
+                    React.createElement("h2", { className: "text-4xl md:text-5xl font-bold text-[#1A2B3C] mb-6 tracking-tight", "data-spock-element-id": "3" },
+                        React.createElement("spock-text", { "data-spock-id": "0" }, "Implementation Roadmap")),
+                    React.createElement("p", { className: "text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed", "data-spock-element-id": "4" },
+                        React.createElement("spock-text", { "data-spock-id": "1" }, " Our phased approach ensures a smooth transition to Elite LMS. The total project duration is scheduled for exactly "),
+                        React.createElement("span", { className: "font-bold text-[#1A2B3C]", "data-spock-element-id": "5" }, totalDuration),
+                        React.createElement("spock-text", { "data-spock-id": "2" }, ", providing a rapid yet comprehensive deployment cycle. "))),
+                React.createElement("div", { ref: containerRef, className: "relative pb-16", "data-spock-element-id": "6" },
+                    React.createElement("div", { className: "absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-slate-100 transform md:-translate-x-1/2", "data-spock-element-id": "7" }),
+                    React.createElement("div", { className: "space-y-16 md:space-y-24", "data-spock-element-id": "8" }, phases.map((phase, index) => (React.createElement(motion.div, { key: phase.id, initial: { opacity: 0, x: index % 2 === 0 ? -50 : 50 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true, margin: "-100px" }, transition: { duration: 0.7, ease: "easeOut" }, className: `relative flex flex-col md:flex-row items-start ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}` },
+                        React.createElement("div", { className: "absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-white border-2 border-[#00A896] shadow-sm z-20 top-0 md:top-8 transition-transform hover:scale-110" },
+                            React.createElement(phase.icon, { className: "text-[#00A896] text-xl" })),
+                        React.createElement("div", { className: "ml-20 md:ml-0 md:w-[45%]" },
+                            React.createElement("div", { className: "bg-white p-6 md:p-8 rounded-lg shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-xl hover:border-[#00A896]/20" },
+                                React.createElement("div", { className: "flex flex-wrap justify-between items-center gap-3 mb-6" },
+                                    React.createElement("div", { className: "flex gap-2" },
+                                        React.createElement("span", { className: "inline-block px-3 py-1 bg-[#1A2B3C] text-white text-[10px] font-bold uppercase tracking-widest rounded-md" },
+                                            "Phase 0",
+                                            phase.id),
+                                        React.createElement("span", { className: "inline-block px-3 py-1 bg-[#00A896]/10 text-[#00A896] text-[10px] font-bold uppercase tracking-widest rounded-md flex items-center gap-1.5" },
+                                            React.createElement(FaCalendarAlt, { className: "text-[9px]" }),
+                                            " ",
+                                            phase.timeline)),
+                                    React.createElement("span", { className: "text-xl font-bold text-[#1A2B3C]" }, formatCurrency(phase.cost))),
+                                React.createElement("h3", { className: "text-2xl font-bold text-[#1A2B3C] mb-5" }, phase.title),
+                                React.createElement("ul", { className: "space-y-4" }, phase.tasks.map((task, idx) => (React.createElement("li", { key: idx, className: "flex items-start text-[15px] text-slate-600 leading-relaxed" },
+                                    React.createElement("span", { className: "w-2 h-2 rounded-full bg-[#00A896] mt-2 mr-3 flex-shrink-0" }),
+                                    task)))))),
+                        React.createElement("div", { className: "hidden md:block md:w-[10%]" }),
+                        React.createElement("div", { className: "hidden md:block md:w-[45%]" })))))),
+                React.createElement(motion.div, { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.8 }, className: "mt-20", "data-spock-element-id": "9" },
+                    React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch", "data-spock-element-id": "10" },
+                        React.createElement("div", { className: "md:col-span-7 bg-[#1A2B3C] rounded-lg p-8 md:p-10 text-white flex flex-col justify-center border border-white/5 shadow-2xl relative overflow-hidden", "data-spock-element-id": "11" },
+                            React.createElement("div", { className: "absolute top-0 right-0 w-32 h-32 bg-[#00A896]/10 rounded-full blur-3xl -mr-16 -mt-16", "data-spock-element-id": "12" }),
+                            React.createElement("div", { className: "flex items-center gap-4 mb-6 relative z-10", "data-spock-element-id": "13" },
+                                React.createElement("div", { className: "p-3 bg-[#00A896] rounded-lg", "data-spock-element-id": "14" },
+                                    React.createElement(FaPlane, { className: "text-white text-2xl", "data-spock-element-id": "15" })),
+                                React.createElement("h4", { className: "text-2xl font-semibold tracking-tight", "data-spock-element-id": "16" },
+                                    React.createElement("spock-text", { "data-spock-id": "3" }, "Travel & Logistics Notice"))),
+                            React.createElement("p", { className: "text-slate-300 text-[16px] leading-relaxed relative z-10", "data-spock-element-id": "17" },
+                                React.createElement("spock-text", { "data-spock-id": "4" }, " Implementation rates are based on travel from our Pretoria branch. Standard AA rates apply for travel charges. All flights, subsistence, and travel costs will be for the customer\u2019s account and quoted separately. After-hour rates are available upon request. "))),
+                        React.createElement("div", { className: "md:col-span-5 bg-white border-2 border-[#00A896] rounded-lg p-10 flex flex-col justify-center items-center text-center shadow-lg", "data-spock-element-id": "18" },
+                            React.createElement("div", { className: "p-4 bg-[#00A896]/10 rounded-full mb-6", "data-spock-element-id": "19" },
+                                React.createElement(FaWallet, { className: "text-[#00A896] text-4xl", "data-spock-element-id": "20" })),
+                            React.createElement("p", { className: "text-slate-500 uppercase tracking-widest text-[10px] font-bold mb-2", "data-spock-element-id": "21" },
+                                React.createElement("spock-text", { "data-spock-id": "5" }, "Total Implementation Investment")),
+                            React.createElement("h2", { className: "text-5xl font-extrabold text-[#1A2B3C] mb-4", "data-spock-element-id": "22" }, formatCurrency(totalCost)),
+                            React.createElement("div", { className: "flex items-center gap-2 text-slate-400 text-xs font-medium border-t border-slate-100 pt-5 w-full justify-center", "data-spock-element-id": "23" },
+                                React.createElement(FaInfoCircle, { className: "text-[#00A896] text-sm", "data-spock-element-id": "24" }),
+                                React.createElement("span", { "data-spock-element-id": "25" },
+                                    React.createElement("spock-text", { "data-spock-id": "6" }, "Professional Services \u2022 "),
+                                    totalDuration,
+                                    React.createElement("spock-text", { "data-spock-id": "7" }, " Timeline"))))))))));
+};
+const ValueAddedServices = () => {
+    const [estimates, setEstimates] = useState({
+        content: 'To be quoted',
+        upload: 'To be quoted',
+        dev: 'To be quoted',
+        reporting: 'To be quoted'
+    });
+    const services = [
+        {
+            id: 'content',
+            icon: FaEdit,
+            title: 'Content Editing Service',
+            description: 'Professional review and refinement of your existing training materials for digital compatibility.'
+        },
+        {
+            id: 'upload',
+            icon: FaFileUpload,
+            title: 'Uploading of Content',
+            description: 'Bulk migration and manual upload of your course assets performed by the Elite implementation team.'
+        },
+        {
+            id: 'dev',
+            icon: FaCode,
+            title: 'Custom Development',
+            description: 'Bespoke feature development or integrations tailored to your unique business ecosystem.'
+        },
+        {
+            id: 'reporting',
+            icon: FaChartLine,
+            title: 'Custom Reporting',
+            description: 'Advanced data visualizations and automated reporting structures beyond standard LMS exports.'
+        }
+    ];
+    const handleEstimateChange = (id, value) => {
+        setEstimates(prev => ({
+            ...prev,
+            [id]: value
+        }));
+    };
+    const containerRef = useRef(null);
+    const isInView = useInView(containerRef, { once: true, margin: '-100px' });
+    return (React.createElement("div", { key: "comp-6", "data-component-index": "6", "data-section-id": "additional-services" },
+        React.createElement("section", { id: "additional-services", className: "py-20 bg-gray-50 font-sans overflow-hidden", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", "data-spock-element-id": "1" },
+                React.createElement(motion.div, { ref: containerRef, initial: { opacity: 0, y: 20 }, animate: isInView ? { opacity: 1, y: 0 } : {}, transition: { duration: 0.6 }, className: "mb-16", "data-spock-element-id": "2" },
+                    React.createElement("div", { className: "flex items-center gap-3 mb-4", "data-spock-element-id": "3" },
+                        React.createElement("div", { className: "h-1 w-12 bg-[#00A896] rounded-full", "data-spock-element-id": "4" }),
+                        React.createElement("span", { className: "text-[#00A896] font-bold tracking-widest uppercase text-sm", "data-spock-element-id": "5" },
+                            React.createElement("spock-text", { "data-spock-id": "0" }, "Optional Extensions"))),
+                    React.createElement("h2", { className: "text-4xl font-bold text-[#1A2B3C] mb-6", "data-spock-element-id": "6" },
+                        React.createElement("spock-text", { "data-spock-id": "1" }, " Value-Added Services ")),
+                    React.createElement("p", { className: "text-gray-600 max-w-2xl text-lg", "data-spock-element-id": "7" },
+                        React.createElement("spock-text", { "data-spock-id": "2" }, " Beyond the core implementation, we offer specialized services to ensure your platform is high-performing and perfectly aligned with your workflows. "))),
+                React.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-10", "data-spock-element-id": "8" },
+                    React.createElement("div", { className: "lg:col-span-8 space-y-4", "data-spock-element-id": "9" }, services.map((service, index) => (React.createElement(motion.div, { key: service.id, initial: { opacity: 0, x: -20 }, animate: isInView ? { opacity: 1, x: 0 } : {}, transition: { duration: 0.5, delay: index * 0.1 }, className: "bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row items-start md:items-center gap-6 group hover:border-[#00A896] transition-colors duration-300" },
+                        React.createElement("div", { className: "p-4 bg-gray-50 rounded-lg text-[#00A896] group-hover:bg-[#00A896] group-hover:text-white transition-colors duration-300" },
+                            React.createElement(service.icon, { size: 24 })),
+                        React.createElement("div", { className: "flex-grow" },
+                            React.createElement("h3", { className: "text-xl font-bold text-[#1A2B3C] mb-1" }, service.title),
+                            React.createElement("p", { className: "text-gray-500 text-sm" }, service.description)),
+                        React.createElement("div", { className: "w-full md:w-48 mt-4 md:mt-0" },
+                            React.createElement("div", { className: "text-[10px] uppercase font-bold text-gray-400 mb-1 px-1" }, "Live Estimate"),
+                            React.createElement("div", { contentEditable: true, suppressContentEditableWarning: true, onBlur: (e) => handleEstimateChange(service.id, e.currentTarget.textContent), className: "w-full bg-gray-50 border-b-2 border-gray-200 px-3 py-2 text-[#1A2B3C] font-semibold focus:outline-none focus:border-[#00A896] hover:bg-white transition-all" }, estimates[service.id])))))),
+                    React.createElement("div", { className: "lg:col-span-4", "data-spock-element-id": "10" },
+                        React.createElement(motion.div, { initial: { opacity: 0, scale: 0.95 }, animate: isInView ? { opacity: 1, scale: 1 } : {}, transition: { duration: 0.6, delay: 0.4 }, className: "bg-[#1A2B3C] text-white rounded-2xl p-8 sticky top-8", "data-spock-element-id": "11" },
+                            React.createElement("div", { className: "flex items-center gap-3 mb-6", "data-spock-element-id": "12" },
+                                React.createElement("div", { className: "p-3 bg-white/10 rounded-full", "data-spock-element-id": "13" },
+                                    React.createElement(FaPlaneDeparture, { className: "text-[#00A896]", size: 20, "data-spock-element-id": "14" })),
+                                React.createElement("h4", { className: "text-xl font-bold", "data-spock-element-id": "15" },
+                                    React.createElement("spock-text", { "data-spock-id": "3" }, "Travel & Logistics"))),
+                            React.createElement("div", { className: "space-y-6 text-sm text-gray-300 leading-relaxed", "data-spock-element-id": "16" },
+                                React.createElement("p", { "data-spock-element-id": "17" },
+                                    React.createElement("spock-text", { "data-spock-id": "4" }, " All flights, subsistence, and travel costs will be for the customer\u2019s account and will be quoted separately based on project requirements. ")),
+                                React.createElement("div", { className: "flex items-start gap-3 bg-white/5 p-4 rounded-lg", "data-spock-element-id": "18" },
+                                    React.createElement(FaInfoCircle, { className: "text-[#00A896] flex-shrink-0 mt-1", "data-spock-element-id": "19" }),
+                                    React.createElement("p", { "data-spock-element-id": "20" },
+                                        React.createElement("spock-text", { "data-spock-id": "5" }, " Travel charges originate from our "),
+                                        React.createElement("span", { className: "text-white font-medium", "data-spock-element-id": "21" },
+                                            React.createElement("spock-text", { "data-spock-id": "6" }, "Pretoria branch")),
+                                        React.createElement("spock-text", { "data-spock-id": "7" }, " and are billed at standard AA rates. "))),
+                                React.createElement("div", { className: "border-t border-white/10 pt-6", "data-spock-element-id": "22" },
+                                    React.createElement("p", { className: "text-xs mb-4 italic", "data-spock-element-id": "23" },
+                                        React.createElement("spock-text", { "data-spock-id": "8" }, " * After-hour rates available on request. ")),
+                                    React.createElement("div", { className: "flex items-center justify-between text-white", "data-spock-element-id": "24" },
+                                        React.createElement("span", { className: "font-medium", "data-spock-element-id": "25" },
+                                            React.createElement("spock-text", { "data-spock-id": "9" }, "Consultation Rate")),
+                                        React.createElement("span", { className: "text-[#00A896] font-bold", "data-spock-element-id": "26" },
+                                            React.createElement("spock-text", { "data-spock-id": "10" }, "R850 / hour")))))))),
+                React.createElement(motion.div, { initial: { opacity: 0 }, animate: isInView ? { opacity: 1 } : {}, transition: { delay: 0.8 }, className: "mt-12 text-center", "data-spock-element-id": "27" },
+                    React.createElement("p", { className: "text-gray-400 text-sm", "data-spock-element-id": "28" },
+                        React.createElement("spock-text", { "data-spock-id": "11" }, " Quotes provided above are for discussion purposes and subject to final scope alignment. ")))))));
+};
+const TermsConditions = () => {
+    const [activeIndex, setActiveIndex] = useState(null);
+    const termsData = [
+        {
+            title: "Proposal Validity & Tax",
+            content: "This proposal is valid for 30 days from the date of issuance (27 February 2026). Please note that all fees and pricing structures listed within this document are exclusive of VAT unless otherwise stated.",
+            icon: FaCalendarCheck
+        },
+        {
+            title: "Subscription Payment Terms",
+            content: "Monthly subscription invoices are generated in advance and are strictly payable within 30 days from the date of the invoice. Consistent payment ensures uninterrupted access to the Elite LMS platform.",
+            icon: FaClock
+        },
+        {
+            title: "Annual Payment Incentive",
+            content: "Clients opting for upfront annual subscription payments are eligible for a 5% discount on the total annual subscription fee. This provides both cost savings and administrative simplicity for your finance team.",
+            icon: FaPercent
+        },
+        {
+            title: "Professional & Consulting Services",
+            content: "Consulting services are billed on a time-and-material basis at our standard rates if no monthly Service Level Agreement (SLA) is in place. All consulting and ad-hoc service invoices are payable within 30 days of the invoice date.",
+            icon: FaGavel
+        },
+        {
+            title: "Agreement Duration",
+            content: "This proposal is based on a 36-month service agreement. This long-term commitment allows us to provide the most competitive pricing and ensure a stable, scalable learning environment for Stage Zero.",
+            icon: FaFileContract
+        },
+        {
+            title: "Annual Escalation",
+            content: "To maintain high service standards and account for operational cost increases, a 5% escalation fee will be applied to all recurring subscription costs per annum on the anniversary of the agreement start date.",
+            icon: FaShieldAlt
+        }
+    ];
+    const toggleAccordion = (index) => {
+        setActiveIndex(activeIndex === index ? null : index);
+    };
+    return (React.createElement("div", { key: "comp-7", "data-component-index": "7", "data-section-id": "terms-conditions" },
+        React.createElement("section", { id: "terms-conditions", className: "font-sans py-24 bg-slate-50 overflow-hidden", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "max-w-5xl mx-auto px-6", "data-spock-element-id": "1" },
+                React.createElement(motion.div, { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 }, className: "text-center mb-16", "data-spock-element-id": "2" },
+                    React.createElement("h2", { className: "text-4xl font-bold text-[#1A2B3C] mb-4", "data-spock-element-id": "3" },
+                        React.createElement("spock-text", { "data-spock-id": "0" }, "Terms & Conditions")),
+                    React.createElement("div", { className: "w-24 h-1 bg-[#00A896] mx-auto mb-6 rounded-full", "data-spock-element-id": "4" }),
+                    React.createElement("p", { className: "text-slate-600 max-w-2xl mx-auto text-lg", "data-spock-element-id": "5" },
+                        React.createElement("spock-text", { "data-spock-id": "1" }, " To ensure a transparent and successful partnership, we have outlined the standard operating procedures and legal frameworks governing this proposal. "))),
+                React.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-12 items-start", "data-spock-element-id": "6" },
+                    React.createElement(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, transition: { duration: 0.7 }, className: "lg:col-span-7 space-y-4", "data-spock-element-id": "7" }, termsData.map((term, index) => (React.createElement("div", { key: index, className: `border rounded-xl transition-all duration-300 ${activeIndex === index ? 'border-[#00A896] bg-white shadow-xl shadow-slate-200/50' : 'border-slate-200 bg-white hover:border-slate-300 shadow-sm'}` },
+                        React.createElement("button", { onClick: () => toggleAccordion(index), className: "w-full flex items-center justify-between p-5 text-left focus:outline-none group" },
+                            React.createElement("div", { className: "flex items-center gap-4" },
+                                React.createElement("div", { className: `p-2 rounded-lg transition-colors duration-300 ${activeIndex === index ? 'bg-[#00A896] text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'}` },
+                                    React.createElement(term.icon, { className: "text-xl" })),
+                                React.createElement("span", { className: `font-semibold text-lg ${activeIndex === index ? 'text-[#1A2B3C]' : 'text-slate-700'}` }, term.title)),
+                            React.createElement(FaChevronDown, { className: `transition-transform duration-300 text-slate-400 ${activeIndex === index ? 'rotate-180 text-[#00A896]' : ''}` })),
+                        React.createElement(AnimatePresence, null, activeIndex === index && (React.createElement(motion.div, { initial: { height: 0, opacity: 0 }, animate: { height: 'auto', opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.3, ease: 'easeInOut' }, className: "overflow-hidden" },
+                            React.createElement("div", { className: "px-5 pb-6 pt-0 ml-14" },
+                                React.createElement("p", { className: "text-slate-600 leading-relaxed" }, term.content))))))))),
+                    React.createElement(motion.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, transition: { duration: 0.7, delay: 0.2 }, className: "lg:col-span-5 space-y-6", "data-spock-element-id": "8" },
+                        React.createElement("div", { className: "bg-[#1A2B3C] rounded-2xl p-8 text-white relative overflow-hidden", "data-spock-element-id": "9" },
+                            React.createElement("div", { className: "absolute top-0 right-0 p-4 opacity-10", "data-spock-element-id": "10" },
+                                React.createElement(FaShieldAlt, { size: 120, "data-spock-element-id": "11" })),
+                            React.createElement("h3", { className: "text-2xl font-bold mb-4 relative z-10", "data-spock-element-id": "12" },
+                                React.createElement("spock-text", { "data-spock-id": "2" }, "Key Highlights")),
+                            React.createElement("ul", { className: "space-y-6 relative z-10", "data-spock-element-id": "13" },
+                                React.createElement("li", { className: "flex gap-4", "data-spock-element-id": "14" },
+                                    React.createElement("div", { className: "mt-1 shrink-0 w-6 h-6 rounded-full bg-[#00A896] flex items-center justify-center text-xs font-bold", "data-spock-element-id": "15" },
+                                        React.createElement("spock-text", { "data-spock-id": "3" }, "1")),
+                                    React.createElement("div", { "data-spock-element-id": "16" },
+                                        React.createElement("p", { className: "font-semibold text-[#00A896]", "data-spock-element-id": "17" },
+                                            React.createElement("spock-text", { "data-spock-id": "4" }, "3-Year Commitment")),
+                                        React.createElement("p", { className: "text-slate-300 text-sm", "data-spock-element-id": "18" },
+                                            React.createElement("spock-text", { "data-spock-id": "5" }, "Strategic partnership terms locked in for 36 months.")))),
+                                React.createElement("li", { className: "flex gap-4", "data-spock-element-id": "19" },
+                                    React.createElement("div", { className: "mt-1 shrink-0 w-6 h-6 rounded-full bg-[#00A896] flex items-center justify-center text-xs font-bold", "data-spock-element-id": "20" },
+                                        React.createElement("spock-text", { "data-spock-id": "6" }, "2")),
+                                    React.createElement("div", { "data-spock-element-id": "21" },
+                                        React.createElement("p", { className: "font-semibold text-[#00A896]", "data-spock-element-id": "22" },
+                                            React.createElement("spock-text", { "data-spock-id": "7" }, "Payment Window")),
+                                        React.createElement("p", { className: "text-slate-300 text-sm", "data-spock-element-id": "23" },
+                                            React.createElement("spock-text", { "data-spock-id": "8" }, "Net 30-day terms apply to all invoices across all services.")))),
+                                React.createElement("li", { className: "flex gap-4", "data-spock-element-id": "24" },
+                                    React.createElement("div", { className: "mt-1 shrink-0 w-6 h-6 rounded-full bg-[#00A896] flex items-center justify-center text-xs font-bold", "data-spock-element-id": "25" },
+                                        React.createElement("spock-text", { "data-spock-id": "9" }, "3")),
+                                    React.createElement("div", { "data-spock-element-id": "26" },
+                                        React.createElement("p", { className: "font-semibold text-[#00A896]", "data-spock-element-id": "27" },
+                                            React.createElement("spock-text", { "data-spock-id": "10" }, "SLA Standards")),
+                                        React.createElement("p", { className: "text-slate-300 text-sm", "data-spock-element-id": "28" },
+                                            React.createElement("spock-text", { "data-spock-id": "11" }, "Standard Service Level Agreements apply to order confirmation.")))))),
+                        React.createElement("div", { className: "bg-white border border-[#00A896]/30 rounded-2xl p-8 shadow-sm", "data-spock-element-id": "29" },
+                            React.createElement("div", { className: "flex items-center gap-3 mb-4 text-[#00A896]", "data-spock-element-id": "30" },
+                                React.createElement(FaPercent, { className: "text-2xl", "data-spock-element-id": "31" }),
+                                React.createElement("h4", { className: "font-bold text-xl text-[#1A2B3C]", "data-spock-element-id": "32" },
+                                    React.createElement("spock-text", { "data-spock-id": "12" }, "Annual Advantage"))),
+                            React.createElement("p", { className: "text-slate-600 mb-6 leading-relaxed", "data-spock-element-id": "33" },
+                                React.createElement("spock-text", { "data-spock-id": "13" }, " Streamline your procurement process and enjoy significant savings by switching to annual billing cycles. ")),
+                            React.createElement("div", { className: "bg-slate-50 rounded-xl p-4 border border-dashed border-slate-300", "data-spock-element-id": "34" },
+                                React.createElement("p", { className: "text-center text-slate-700 font-medium", "data-spock-element-id": "35" },
+                                    React.createElement("spock-text", { "data-spock-id": "14" }, " Secure a "),
+                                    React.createElement("span", { className: "text-[#00A896] font-bold", "data-spock-element-id": "36" },
+                                        React.createElement("spock-text", { "data-spock-id": "15" }, "5% discount")),
+                                    React.createElement("spock-text", { "data-spock-id": "16" }, " on upfront annual settlements. ")))))),
+                React.createElement(motion.div, { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport: { once: true }, transition: { duration: 1, delay: 0.5 }, className: "mt-20 pt-8 border-t border-slate-200 text-center", "data-spock-element-id": "37" },
+                    React.createElement("p", { className: "text-slate-400 text-sm italic italic uppercase tracking-widest", "data-spock-element-id": "38" },
+                        React.createElement("spock-text", { "data-spock-id": "17" }, " Confidential Document \u2022 Elite LMS \u2022 Stage Zero Proposal ")))))));
+};
+const AcceptanceDigitalSignOff = () => {
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [hoveredField, setHoveredField] = useState(null);
+    const [activeField, setActiveField] = useState(null);
+    const [fieldValues, setFieldValues] = useState({});
+    const fields = [
+        { id: 'signature', label: 'Signature of duly authorized person', icon: FaSignature, placeholder: 'Type to sign digitally...', span: 2 },
+        { id: 'printName', label: 'Name (print)', icon: FaUser, placeholder: 'Enter full name', span: 1 },
+        { id: 'date', label: 'Date', icon: FaCalendarDay, placeholder: 'YYYY-MM-DD', span: 1 },
+        { id: 'companyName', label: 'Company Name for Invoice purposes', icon: FaBuilding, placeholder: 'Legal entity name', span: 2 },
+        { id: 'regNumber', label: 'Company Registration Number', icon: FaHashtag, placeholder: 'Registration #', span: 1 },
+        { id: 'vatNumber', label: 'Company VAT number', icon: FaFileSignature, placeholder: 'VAT #', span: 1 },
+        { id: 'orderNumber', label: 'Order Number (if applicable)', icon: FaPaperPlane, placeholder: 'PO Number', span: 2 }
+    ];
+    const handleInputChange = (id, value) => {
+        setFieldValues(prev => ({
+            ...prev,
+            [id]: value
+        }));
+    };
+    const handleSubmission = () => {
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 6000);
+    };
+    return (React.createElement("div", { key: "comp-8", "data-component-index": "8", "data-section-id": "proposal-acceptance" },
+        React.createElement("section", { id: "proposal-acceptance", className: "py-24 px-6 md:px-12 bg-slate-50 font-sans overflow-hidden", "data-spock-element-id": "0" },
+            React.createElement("div", { className: "max-w-4xl mx-auto", "data-spock-element-id": "1" },
+                React.createElement(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 }, className: "bg-white rounded-2xl shadow-xl border border-slate-200", "data-spock-element-id": "2" },
+                    React.createElement("div", { className: "bg-[#1A2B3C] p-8 md:p-12 text-white rounded-t-2xl", "data-spock-element-id": "3" },
+                        React.createElement("div", { className: "flex items-center gap-4 mb-4", "data-spock-element-id": "4" },
+                            React.createElement("div", { className: "w-14 h-14 rounded-lg bg-[#00A896] flex items-center justify-center text-white shadow-lg", "data-spock-element-id": "5" },
+                                React.createElement(FaFileSignature, { className: "text-3xl", "data-spock-element-id": "6" })),
+                            React.createElement("h2", { className: "text-3xl font-bold uppercase tracking-wide", "data-spock-element-id": "7" },
+                                React.createElement("spock-text", { "data-spock-id": "0" }, "Acceptance of Proposal"))),
+                        React.createElement("p", { className: "text-slate-300 text-lg max-w-2xl leading-relaxed font-medium", "data-spock-element-id": "8" },
+                            React.createElement("spock-text", { "data-spock-id": "1" }, " By signing this document, Stage Zero acknowledges and accepts the terms, conditions, and cost structures outlined in the Elite LMS Strategic Proposal. "))),
+                    React.createElement("div", { className: "px-8 pt-10 md:px-12", "data-spock-element-id": "9" },
+                        React.createElement("div", { className: "bg-slate-50 border-l-4 border-[#00A896] p-6 mb-10", "data-spock-element-id": "10" },
+                            React.createElement("p", { className: "text-slate-700 font-medium italic", "data-spock-element-id": "11" },
+                                React.createElement("spock-text", { "data-spock-id": "2" }, " \"I hereby accept the cost proposal and terms as stated in this document and wish to place an order. I understand that the standard SLA agreement will apply to this order confirmation.\" "))),
+                        React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8", "data-spock-element-id": "12" }, fields.map((field) => (React.createElement("div", { key: field.id, className: `${field.span === 2 ? 'md:col-span-2' : 'col-span-1'} flex flex-col gap-3`, onMouseEnter: () => setHoveredField(field.id), onMouseLeave: () => setHoveredField(null) },
+                            React.createElement("label", { className: "flex items-center gap-3 text-sm font-bold text-[#1A2B3C] uppercase tracking-wider" },
+                                React.createElement(field.icon, { className: "text-[#00A896] text-lg" }),
+                                field.label),
+                            React.createElement("div", { className: "relative" },
+                                React.createElement("div", { contentEditable: true, suppressContentEditableWarning: true, onFocus: () => setActiveField(field.id), onBlur: () => setActiveField(null), onInput: (e) => handleInputChange(field.id, e.currentTarget.textContent), className: `min-h-[56px] p-4 bg-white border-2 rounded-xl transition-all duration-200 outline-none text-slate-800 ${field.id === 'signature' ? 'font-serif text-2xl italic border-dashed py-6 px-8' : 'font-sans'} ${activeField === field.id ? 'border-[#00A896] shadow-md ring-4 ring-[#00A896]/5' : 'border-slate-200 hover:border-slate-300'}` }),
+                                (!fieldValues[field.id] || fieldValues[field.id] === '') && (React.createElement("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none font-normal italic" }, field.placeholder))),
+                            field.id === 'signature' && (React.createElement("div", { className: "flex items-center gap-2 mt-1" },
+                                React.createElement("span", { className: "text-[10px] text-slate-400 uppercase font-bold tracking-widest" }, "Digitally signed via Elite LMS Secure Portal"))))))),
+                        React.createElement("div", { className: "mt-16 mb-12 border-t border-slate-100 pt-10", "data-spock-element-id": "13" },
+                            React.createElement("div", { className: "flex flex-col md:flex-row items-center justify-between gap-10", "data-spock-element-id": "14" },
+                                React.createElement("div", { className: "flex items-start gap-5", "data-spock-element-id": "15" },
+                                    React.createElement("div", { className: "p-4 bg-blue-50 text-[#1A2B3C] rounded-2xl", "data-spock-element-id": "16" },
+                                        React.createElement(FaInfoCircle, { className: "text-2xl", "data-spock-element-id": "17" })),
+                                    React.createElement("div", { className: "max-w-sm", "data-spock-element-id": "18" },
+                                        React.createElement("h4", { className: "font-bold text-[#1A2B3C] text-lg", "data-spock-element-id": "19" },
+                                            React.createElement("spock-text", { "data-spock-id": "3" }, "Next Steps")),
+                                        React.createElement("p", { className: "text-sm text-slate-600 leading-relaxed", "data-spock-element-id": "20" },
+                                            React.createElement("spock-text", { "data-spock-id": "4" }, " Please initial each page and email the signed PDF acceptance to: "),
+                                            React.createElement("br", { "data-spock-element-id": "21" }),
+                                            React.createElement("span", { className: "text-[#00A896] font-bold text-base", "data-spock-element-id": "22" },
+                                                React.createElement("spock-text", { "data-spock-id": "5" }, "nichelle@myelitelms.com"))))),
+                                React.createElement("div", { className: "relative w-full md:w-auto", "data-spock-element-id": "23" },
+                                    React.createElement(AnimatePresence, { mode: "wait", "data-spock-element-id": "24" }, !isSubmitted ? (React.createElement(motion.button, { key: "submit-btn", initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.95 }, whileHover: { scale: 1.05, backgroundColor: '#008f7e' }, whileTap: { scale: 0.98 }, onClick: handleSubmission, className: "w-full md:w-auto cursor-pointer bg-[#00A896] text-white px-12 py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-4 shadow-xl shadow-[#00A896]/20 transition-all border-none" },
+                                        "Submit Acceptance ",
+                                        React.createElement(FaCheckCircle, { className: "text-2xl" }))) : (React.createElement(motion.div, { key: "success-msg", initial: { scale: 0.8, opacity: 0 }, animate: { scale: 1, opacity: 1 }, className: "w-full md:w-auto bg-green-50 text-green-700 px-12 py-5 rounded-xl font-bold flex items-center justify-center gap-4 border-2 border-green-100" },
+                                        React.createElement(FaCheckCircle, { className: "text-2xl text-green-600" }),
+                                        " Proposal Accepted"))))))),
+                    React.createElement("div", { className: "bg-slate-50 p-8 text-center rounded-b-2xl border-t border-slate-200", "data-spock-element-id": "25" },
+                        React.createElement("p", { className: "text-xs text-slate-500 uppercase tracking-widest font-bold", "data-spock-element-id": "26" },
+                            React.createElement("spock-text", { "data-spock-id": "6" }, " Proposal Valid for 30 Days \u2022 Elite LMS Solution Group \u2022 Pretoria Branch ")))),
+                React.createElement(motion.div, { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport: { once: true }, transition: { delay: 0.5 }, className: "mt-12 flex flex-wrap justify-center items-center gap-10 text-slate-400", "data-spock-element-id": "27" },
+                    React.createElement("div", { className: "flex items-center gap-3 text-sm font-semibold tracking-wide", "data-spock-element-id": "28" },
+                        React.createElement("div", { className: "w-3 h-3 rounded-full bg-[#00A896] shadow-sm", "data-spock-element-id": "29" }),
+                        React.createElement("spock-text", { "data-spock-id": "7" }, " SECURE SSL ENCRYPTION ")),
+                    React.createElement("div", { className: "flex items-center gap-3 text-sm font-semibold tracking-wide", "data-spock-element-id": "30" },
+                        React.createElement("div", { className: "w-3 h-3 rounded-full bg-[#00A896] shadow-sm", "data-spock-element-id": "31" }),
+                        React.createElement("spock-text", { "data-spock-id": "8" }, " AUDIT TRAIL ENABLED ")),
+                    React.createElement("div", { className: "flex items-center gap-3 text-sm font-semibold tracking-wide", "data-spock-element-id": "32" },
+                        React.createElement("div", { className: "w-3 h-3 rounded-full bg-[#00A896] shadow-sm", "data-spock-element-id": "33" }),
+                        React.createElement("spock-text", { "data-spock-id": "9" }, " LEGALLY BINDING ")))))));
+};
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null };
+    }
+    static getDerivedStateFromError(error) { return { hasError: true, error }; }
+    componentDidCatch(error, errorInfo) { console.error("Spock Document Error:", error, errorInfo); }
+    render() {
+        if (this.state.hasError) {
+            return (React.createElement("div", { className: "p-8 m-4 bg-red-50 border border-red-200 rounded-lg text-red-700 font-mono" },
+                React.createElement("h1", { className: "text-xl font-bold mb-4" }, "Spock Document Error: Runtime Error"),
+                React.createElement("pre", { className: "whitespace-pre-wrap break-words bg-white p-4 rounded border border-red-100 text-sm" }, this.state.error?.message)));
+        }
+        return this.props.children;
+    }
+}
+const App = () => {
+    return (React.createElement(ErrorBoundary, null,
+        React.createElement("div", { className: "min-h-screen" },
+            React.createElement(IntroductionWelcome, null),
+            React.createElement(InteractiveNavigation, null),
+            React.createElement(TheEliteLmsApproach, null),
+            React.createElement(FeaturesBusinessBenefits, null),
+            React.createElement(MonthlySubscriptionCosts, null),
+            React.createElement(ImplementationRoadmapCosts, null),
+            React.createElement(ValueAddedServices, null),
+            React.createElement(TermsConditions, null),
+            React.createElement(AcceptanceDigitalSignOff, null))));
+};
+const root = createRoot(document.getElementById("root"));
+root.render(React.createElement(App, null));
+</script>
+</body>
+</html>
